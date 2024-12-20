@@ -6,7 +6,7 @@ CopraRNA is a powerful program that leverages RNA-RNA interaction prediction and
 
 This modified code expands CopraRNA functionality to include closed, non-RefSeq genomes found available in the NCBI Genomes FTP site (https://ftp.ncbi.nlm.nih.gov/genomes/GENOME_REPORTS/prokaryotes.txt). Additionally, it allows the user to pass any IntaRNA option from CopraRNA, allowing additional control over RNA interaction parameters.
 
-PLEASE CITE THE ORIGINAL PUBLICATIONS
+**PLEASE CITE THE ORIGINAL PUBLICATIONS**
 
 Comparative genomics boosts target prediction for bacterial small RNAs Patrick R. Wright, Andreas S. Richter, Kai Papenfort, Martin Mann, Jörg Vogel, Wolfgang R. Hess, Rolf Backofenb, and Jens Georg Proceedings of the National Academy of Sciences of the USA, 110, E3487-E3496, 2013, DOI(10.1073/pnas.1303248110).
 
