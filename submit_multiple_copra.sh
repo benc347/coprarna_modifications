@@ -1,17 +1,20 @@
 #!/bin/bash 
 
-#SBATCH --time=48:00:00					##(day-hour:minute:second) sets the max time for the job
-#SBATCH --cpus-per-task=8	 			##request number of cpus
-#SBATCH --mem=48G						##max ram for the job
+#example SLURM script for running the modified CopraRNA2 pipeline
 
-#SBATCH --nodes=1						##request number of nodes (always keep at 1)
-#SBATCH --mail-user=bienvenido.tibbs-cortes@usda.gov		##email address to mail specified updates to
-#SBATCH --mail-type=BEGIN
-#SBATCH --mail-type=END					##these say under what conditions do you want email updates
-#SBATCH --mail-type=FAIL
-#SBATCH --output="00_copra_masterscript_%j"		##names what slurm logfile will be saved to 
+#####INPUT YOUR JOB SUMISSION INFO HERE#########
 
 #accept user input
+#runcode - alphanumeric
+#	as part of working around the RefSeq database limitation in the original code
+#		final_build_kegg2refseq.pl builds an updated genome list based on user input
+#		the output is then moved to a directory in bin/coprarna_aux named $runcode
+#upstreamdist and downstreamdist - integers
+#	passed to the CopraRNA arguments --ntup and --ntdown, respectively
+#	number of nucleotides upstream and downstream of the target region analyzed by CopraRNA
+#regiontype - "5utr", "3utr", or "cds"
+#	passed to the CopraRNA --region argument
+#	determines region of annotated feature that will be assessed for sRNA interaction
 runcode=$1
 upstreamdist=$2
 downstreamdist=$3
@@ -31,7 +34,7 @@ module load miniconda
 source activate ${envpath}
 
 #pull prokaryotes.txt from ncbi and convert to unix
-#can take forever if run through sbatch, so might be worth it to just pull it manually
+#can take forever if run through sbatch (at least on my HPC), so probably just worth it to pull it manually every now and then
 	#wget ftp://ftp.ncbi.nih.gov/genomes/GENOME_REPORTS/prokaryotes.txt
 	#dos2unix prokaryotes.txt
 	cp ${envpath}/copra_modifications/prokaryotes.txt ./
