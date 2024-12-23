@@ -22,6 +22,5 @@ The simplest way to incorporate the modified code is the following:
   3. From the "copra_modifications_12_20" directory, run "prepare_mod_copra.sh"
   4. Run CopraRNA on non-RefSeq genomes and with additional parameters passed as a text file to the --intarna_file argument
 
-Two additional scripts, "submit_multiple_copra.sh" and "run_copra.sh" are provided for running the modified CopraRNA code on a server
-
+Two additional scripts, "submit_multiple_copra.sh" and "run_copra.sh" are provided for running the modified CopraRNA code on a server. Also provided is "intaparams.txt", an example file of additional IntaRNA parameters.
 
