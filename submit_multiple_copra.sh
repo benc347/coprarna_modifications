@@ -52,8 +52,7 @@ mv kegg2refseqnew.csv ${envpath}/bin/coprarna_aux/${runcode}/
 sed -i '/^>/!s/T/U/g' fastas/*.fa
 
 #create subdirectories for each sRNA of interest
-#run copraRNA2 for each sRNA
-
+#run copraRNA2 for each sRNA multifasta
 for file in fastas/*.f*a; do
 	
 	#create subdirectories for each sRNA of interest and copy run_copra.sh and .fa file into them
