@@ -1,17 +1,25 @@
 #!/bin/bash 
 
-#SBATCH --time=48:00:00					##(day-hour:minute:second) sets the max time for the job
-#SBATCH --cpus-per-task=40	 			##request number of cpus
-#SBATCH --mem=80G						##max ram for the job
+###YOUR JOB SUBMISSION INFO HERE###
 
-#SBATCH --nodes=1						##request number of nodes (always keep at 1)
-#SBATCH --mail-user=bienvenido.tibbs-cortes@usda.gov		##email address to mail specified updates to
-#SBATCH --mail-type=BEGIN
-#SBATCH --mail-type=END					##these say under what conditions do you want email updates
-#SBATCH --mail-type=FAIL
-#SBATCH --output="00_copra_slurmlog_%j"		##names what slurm logfile will be saved to 
+#take input from batch file or provide it directly
 
-#take input from batch file
+#fasta - multifasta file of homologs for a single sRNA
+#	fasta headers should be the GenBank/RefSeq ID for an organism in a closed genome found in https://ftp.ncbi.nlm.nih.gov/genomes/GENOME_REPORTS/prokaryotes.txt
+#runcode - alphanumeric
+#	as part of working around the RefSeq database limitation in the original code
+#		final_build_kegg2refseq.pl builds an updated genome list based on user input
+#		the output is then moved to a directory in bin/coprarna_aux named $runcode
+#upstreamdist and downstreamdist - integers
+#	passed to the CopraRNA arguments --ntup and --ntdown, respectively
+#	number of nucleotides upstream and downstream of the target region analyzed by CopraRNA
+#regiontype - "5utr", "3utr", or "cds"
+#	passed to the CopraRNA --region argument
+#	determines region of annotated feature that will be assessed for sRNA interaction
+#intaparams - a text file of IntaRNA parameters
+#	file should contain a single line with all IntaRNA parameters of interest
+#	see https://github.com/BackofenLab/IntaRNA for the exhaustive list of possible parameters
+#	example format found in this repository: example_intaRNA_params.txt
 fasta=$1
 runcode=$2
 upstreamdist=$3
@@ -21,12 +29,9 @@ intaparams=$6
 
 #working in a conda environment, so activate it first
 module load miniconda
-source activate /project/ibdru_bioinformatics/Ben/conda_envs/mod_copra_env/
+source activate /path/to/your/environment/
 
-#call copraRNA
-#ntup/ntdown - areas to search around target region
-#region - cds for entire transcript
-#don't call enrich because DAVID has extremely limited genomes
-	#therefore, it generally won't work for organisms that aren't extensively studied
-
+#call modified copraRNA command
+#NOTE: in many cases, the --enrich flag will not work for poorly studied organisms
+#	this is because DAVID-WS only works for well-studied genomes
 final_coprarna3.pl -srnaseq $fasta -runname $runcode -ntup $upstreamdist -ntdown $downstreamdist -region $regiontype -topcount 200 -cores 40 --verbose --cons 2 --intarna_file $intaparams
