@@ -26,7 +26,7 @@ runcode="${runcode:-$(openssl rand -hex 4)}"
 #this script submits multiple copraRNA jobs
 #keeps things separated so that crashes don't affect the entire run
 #does the preparation for the inputs
-envpath="/project/ibdru_bioinformatics/Ben/conda_envs/mod_copra_env"
+envpath="/path/to/your/conda/environment"
 
 #need to activate conda environment for final_build_kegg2refseq.pl
 #conda install coprarna bioconda::perl-lwp-protocol-https
@@ -37,7 +37,7 @@ source activate ${envpath}
 #can take forever if run through sbatch (at least on my HPC), so probably just worth it to pull it manually every now and then
 	#wget ftp://ftp.ncbi.nih.gov/genomes/GENOME_REPORTS/prokaryotes.txt
 	#dos2unix prokaryotes.txt
-	cp ${envpath}/copra_modifications/prokaryotes.txt ./
+	cp ${envpath}/copra_modifications_12_20/prokaryotes.txt ./
 
 #build updated genomes list from user input
 #this bypasses the limitation of CopraRNA to using only RefSeq genomes
